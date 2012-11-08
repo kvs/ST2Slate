@@ -1,0 +1,155 @@
+{ "name": "Slate",
+  "comment": "FIXME: all of the operations have undefined highlighting for their arguments. Reserved keywords for arithmetic not highlighted, either",
+  "scopeName": "source.slate",
+  "fileTypes": ["slate"],
+  "patterns": [
+  	{
+      "name": "comment",
+  		"match": "#.*"
+  	},
+
+    {
+      "comment": "the 'config' directive",
+      "begin": "^\\s*(config)\\s+", "end": "$",
+      "captures": { "1": { "name": "constant.language" } },
+      "patterns": [
+        {
+          "begin": "(defaultToCurrentScreen|nudgePercentOf|resizePercentOf|repeatOnHoldOps|secondsBeforeRepeat|checkDefaultsOnLoad|focusCheckWidth|focusCheckWidthMax|focusPreferSameApp|orderScreensLeftToRight|windowHintsBackgroundColor|windowHintsWidth|windowHintsHeight|windowHintsIconAlpha|windowHintsFontColor|windowHintsFontName|windowHintsFontSize|windowHintsDuration|windowHintsRoundedCornerSize|windowHintsIgnoreHiddenWindows|windowHintsTopLeftX|windowHintsTopLeftY|windowHintsOrder|windowHintsShowIcons|windowHintsSpreadSearchWidth|windowHintsSpreadSearchHeight|windowHintsSpreadPadding|windowHintsSpread|switchIconSize|switchIconPadding|switchBackgroundColor|switchSelectedBackgroundColor|switchSelectedBorderColor|switchSelectedBorderSize|switchRoundedCornerSize|switchOrientation|switchSecondsBeforeRepeat|switchSecondsBetweenRepeat|switchStopRepeatAtEdge|switchOnlyFocusMainWindow|switchShowTitles|switchFontColor|switchFontName|switchFontSize|switchType|switchSelectedPadding|keyboardLayout|snapshotTitleMatch|gridBackgroundColor|gridRoundedCornerSize|gridCellBackgroundColor|gridCellSelectedColor|gridCellRoundedCornerSize|layoutFocusOnActivate)", "end": "$",
+          "captures": {
+            "1": { "name": "variable.language" }
+          },
+          "patterns": [
+            { "include": "#variables" },
+            { "include": "#constants" },
+            {
+              "name": "string.quoted.single",
+              "match": "."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "the 'alias' directive",
+      "begin": "^\\s*(alias)\\s+", "end": "$",
+      "captures": { "1": { "name": "constant.language" } },
+      "patterns": [
+        {
+          "begin": "([^\\s]+)\\s*(.*)", "end": "$",
+          "captures": {
+            "1": { "name": "variable.other" },
+            "2": { "name": "string.quoted.double" }
+          }
+        }
+      ]
+    },
+    {
+      "comment": "the 'layout' directive",
+      "begin": "^\\s*(layout)\\s+", "end": "$",
+      "captures": { "1": { "name": "constant.language" } },
+      "patterns": [
+        {
+          "begin": "([^\\s]+)\\s+('[^']+')(:(IGNORE_FAIL|REPEAT|MAIN_FIRST|MAIN_LAST|SORT_TITLE|TITLE_ORDER=\\w+|,)+)?", "end": "$",
+          "captures": {
+            "1": { "name": "variable.other" },
+            "2": { "name": "string.quoted.single" },
+            "3": { "name": "variable.other" }
+          },
+          "patterns": [
+            { "include": "#variables" },
+            { "include": "#layout_operations"}
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "the 'default' directive",
+      "begin": "^\\s*(default)\\s+", "end": "$",
+      "captures": { "1": { "name": "constant.language" } },
+      "patterns": [
+        {
+          "begin": "([^\\s]+)\\s*", "end": "$",
+          "captures": {
+            "1": { "name": "variable.other" }
+          },
+          "patterns": [
+            {
+              "begin": "(resolutions|count):", "end": "$",
+              "captures": {
+                "1": { "name": "variable.other" }
+              },
+              "patterns": [
+                { "include": "#variables" },
+                { "name": "string.quoted.single", "match": "." }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "the 'bind' directive",
+      "begin": "^\\s*(bind)\\s+", "end": "$",
+      "captures": { "1": { "name": "constant.language" } },
+      "patterns": [
+        {
+          "begin": "(\\w+):", "end": "\\s+",
+          "captures": {
+            "1": { "name": "variable.other" }
+          },
+          "patterns": [
+            {
+              "match": "(ctrl|alt|cmd|shift|fn)",
+              "name": "constant.language"
+            }
+          ]
+        },
+        {
+          "begin": "\\s*", "end": "$",
+          "patterns": [
+            { "include": "#layout_operations" },
+            { "include": "#bind_operations" }
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "the 'source' directive",
+      "begin": "^\\s*(source)\\s+", "end": "$",
+      "captures": { "1": { "name": "constant.language" } },
+      "patterns": [
+        {
+          "begin": "(.+?)( if_exists)?$", "end": "$",
+          "captures": {
+            "1": { "name": "variable.other" },
+            "2": { "name": "constant.language" }
+          }
+        }
+      ]
+    }
+  ],
+
+  "repository": {
+    "variables": {
+      "name": "variable.other",
+      "match": "\\$\\{[^\\s]+\\}"
+    },
+    "builtin-variables": {
+      "name": "variable.language",
+      "match": "\\b((screenOrigin|screenSize|windowTopLeft|windowSize|newWindowSize)[XY]|windowHintsWidth|windowHintsHeight)\\b"
+    },
+    "constants": {
+      "name": "constant.language",
+      "match": "(true|false|windowSize|screenSize|resize|nudge|leftToRight|rightToLeft|horizontal|vertical|app|window|dvorak|qwerty|levenshtein|sequential)"
+    },
+    "layout_operations": {
+      "name": "constant.language",
+      "match": "(move|resize|push|nudge|throw|corner)"
+    },
+    "bind_operations": {
+      "name": "constant.language",
+      "match": "(shell|hide|show|toggle|chain|sequence|layout|focus|snapshot|delete-snapshot|activate-snapshot|hint|grid|relaunch|switch)"
+    }
+  },
+  "uuid": "b043d141-90d5-462c-86d3-3885ea68fe23"
+}

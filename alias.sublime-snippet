@@ -1,0 +1,6 @@
+<snippet>
+    <content><![CDATA[alias ${1:variable} ${2:value}
+]]></content>
+    <tabTrigger>alias</tabTrigger>
+    <description>alias</description>
+</snippet>

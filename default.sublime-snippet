@@ -1,0 +1,6 @@
+<snippet>
+    <content><![CDATA[default ${1:layout-or-snapshot-name} ${2:screen-configuration}
+]]></content>
+    <tabTrigger>default</tabTrigger>
+    <description>default</description>
+</snippet>

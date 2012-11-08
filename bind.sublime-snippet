@@ -1,0 +1,6 @@
+<snippet>
+    <content><![CDATA[bind ${1:key}:${2:modifier} ${3:operation}
+]]></content>
+    <tabTrigger>bind</tabTrigger>
+    <description>bind</description>
+</snippet>

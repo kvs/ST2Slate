@@ -1,0 +1,6 @@
+<snippet>
+    <content><![CDATA[source ${1:file}${2: if_exists}
+]]></content>
+    <tabTrigger>source</tabTrigger>
+    <description>source</description>
+</snippet>
