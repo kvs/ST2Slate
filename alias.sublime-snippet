@@ -3,4 +3,5 @@
 ]]></content>
     <tabTrigger>alias</tabTrigger>
     <description>alias</description>
+    <scope>source.slate</scope>
 </snippet>
