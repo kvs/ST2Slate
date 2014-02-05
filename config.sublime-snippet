@@ -3,4 +3,5 @@
 ]]></content>
     <tabTrigger>config</tabTrigger>
     <description>config</description>
+    <scope>source.slate</scope>
 </snippet>
